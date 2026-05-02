@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mini Minecraft</title>
+<style>
+  body { margin: 0; overflow: hidden; background: skyblue; }
+
+  #player {
+    width: 40px;
+    height: 40px;
+    background: brown;
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+  }
+
+  .btn {
+    position: fixed;
+    bottom: 20px;
+    width: 60px;
+    height: 60px;
+    background: blue;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+  }
+
+  #left { left: 20px; }
+  #right { left: 100px; }
+  #jump { right: 20px; }
+</style>
+</head>
+<body>
+
+<div id="player"></div>
+
+<button id="left" class="btn">◀</button>
+<button id="right" class="btn">▶</button>
+<button id="jump" class="btn">▲</button>
+
+<script>
+let player = document.getElementById("player");
+let x = 50;
+let y = 50;
+let velocityY = 0;
+let gravity = 1;
+let jumping = false;
+
+function update() {
+  velocityY -= gravity;
+  y -= velocityY;
+
+  if (y < 50) {
+    y = 50;
+    velocityY = 0;
+    jumping = false;
+  }
+
+  player.style.left = x + "px";
+  player.style.bottom = y + "px";
+
+  requestAnimationFrame(update);
+}
+
+document.getElementById("left").onclick = () => x -= 10;
+document.getElementById("right").onclick = () => x += 10;
+
+document.getElementById("jump").onclick = () => {
+  if (!jumping) {
+    velocityY = 15;
+    jumping = true;
+  }
+};
+
+update();
+</script>
+
+</body>
+</html>
